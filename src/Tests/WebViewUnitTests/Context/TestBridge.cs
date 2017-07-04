@@ -1,4 +1,4 @@
-namespace WebViewUnitTests
+namespace WebViewUnitTests.Context
 {
     using System;
 

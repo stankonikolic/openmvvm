@@ -51,9 +51,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestBridge.cs" />
-    <Compile Include="TestViewModel.cs" />
-    <Compile Include="TestViewModelLocator.cs" />
+    <Compile Include="Context\ItemViewModel.cs" />
+    <Compile Include="Context\TestBridge.cs" />
+    <Compile Include="Context\TestViewModel.cs" />
+    <Compile Include="Context\TestViewModelLocator.cs" />
     <Compile Include="WebViewBridgeUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

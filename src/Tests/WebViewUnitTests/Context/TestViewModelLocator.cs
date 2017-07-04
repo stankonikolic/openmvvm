@@ -1,4 +1,4 @@
-namespace WebViewUnitTests
+namespace WebViewUnitTests.Context
 {
     using OpenMVVM.Core;
 
@@ -6,8 +6,10 @@ namespace WebViewUnitTests
     {
         public TestViewModelLocator()
         {
-            var ioc = IocInstanceFactory.Default;
+            IocInstanceFactory.DefaultWeb.Reset();
 
+            var ioc = IocInstanceFactory.DefaultWeb;
+            
             ioc.RegisterType<TestViewModel>();
         }
 

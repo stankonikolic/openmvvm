@@ -6,6 +6,8 @@
 
     using OpenMVVM.WebView;
 
+    using WebViewUnitTests.Context;
+
     [TestClass]
     public class WebViewBridgeUnitTest
     {
@@ -48,6 +50,67 @@
                 };
 
             this.testViewModelLocator.TestViewModel.Title = newText;
+
+            await Task.Delay(1000);
+            Assert.IsTrue(called, "Message not sent.");
+        }
+
+
+        [TestMethod]
+        public async Task NastedPropertyChangedMessageTest()
+        {
+            bool called = false;
+
+            this.testBridge.OnReceiveMessage(
+                new BridgeMessage()
+                    {
+                        FunctionName = "RegisterBinding",
+                        Params = new object[] { "TestViewModel.ItemViewModel.Title", false }
+                    });
+
+            var newText = "Some text";
+            this.testBridge.Action = (m) =>
+                {
+                    Assert.AreEqual(m.FunctionName, "setValue", "Wrong function called.");
+                    Assert.AreEqual(m.Params.Length, 2, "Wrong parameter number supplied.");
+
+                    Assert.AreEqual((string)m.Params[0], "TestViewModel.ItemViewModel.Title", "Message contains wrong prop path.");
+                    Assert.AreEqual((string)m.Params[1], newText, "Message contains wrong prop value.");
+
+                    called = true;
+                };
+
+            this.testViewModelLocator.TestViewModel.Title = newText;
+
+            await Task.Delay(1000);
+            Assert.IsTrue(called, "Message not sent.");
+        }
+
+        [TestMethod]
+        public async Task MiddlePropertyChangedMessageTest()
+        {
+            bool called = false;
+
+            this.testBridge.OnReceiveMessage(
+                new BridgeMessage()
+                    {
+                        FunctionName = "RegisterBinding",
+                        Params = new object[] { "TestViewModel.ItemViewModel.Title", false }
+                    });
+
+            var newText = "Some text";
+            this.testBridge.Action = (m) =>
+                {
+                    Assert.AreEqual(m.FunctionName, "setValue", "Wrong function called.");
+                    Assert.AreEqual(m.Params.Length, 2, "Wrong parameter number supplied.");
+
+                    Assert.AreEqual((string)m.Params[0], "TestViewModel.ItemViewModel.Title", "Message contains wrong prop path.");
+                    Assert.AreEqual((string)m.Params[1], newText, "Message contains wrong prop value.");
+
+                    called = true;
+                };
+
+            this.testViewModelLocator.TestViewModel.Item = new ItemViewModel();
 
             await Task.Delay(1000);
             Assert.IsTrue(called, "Message not sent.");

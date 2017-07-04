@@ -125,5 +125,10 @@
                 this.kernel.Get<TService>();
             }
         }
+
+        public void Reset()
+        {
+            instance = null;
+        }
     }
 }

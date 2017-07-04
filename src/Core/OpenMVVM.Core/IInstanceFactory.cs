@@ -31,5 +31,7 @@
 
         TService GetInstanceByKey<TService>(string key)
             where TService : class;
+
+        void Reset();
     }
 }
